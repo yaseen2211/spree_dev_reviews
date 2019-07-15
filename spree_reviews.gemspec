@@ -5,7 +5,7 @@ require 'spree_reviews/version'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_reviews'
+  s.name        = 'spree_dev_reviews'
   s.version     = SpreeReviews.version
   s.summary     = 'Basic review and ratings facility for Spree'
   s.description = s.summary
