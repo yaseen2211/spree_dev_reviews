@@ -14,24 +14,39 @@ class Spree::ReviewsController < Spree::StoreController
 
   # save if all ok
   def create
-    params[:review][:rating].sub!(/\s*[^0-9]*\z/, '') unless params[:review][:rating].blank?
+    if params[:from_rating].present?
+      addRate
+    else
+      params[:review][:rating].sub!(/\s*[^0-9]*\z/, '') unless defined? (params[:review][:rating]) && params[:review][:rating].blank?
+      @review = Spree::Review.new(review_params)
+      @review.product = @product
+      @review.user = spree_current_user if spree_user_signed_in?
+      @review.ip_address = request.remote_ip
+      @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
+      authorize! :create, @review
+      if @review.save
+        flash[:notice] = Spree.t(:review_successfully_submitted)
+        redirect_to spree.product_path(@product)
+      else
+        render :new
+      end
+    end
 
-    @review = Spree::Review.new(review_params)
+  end
+
+  private
+  def addRate
+    @review = Spree::Review.new(review_user_params)
     @review.product = @product
     @review.user = spree_current_user if spree_user_signed_in?
     @review.ip_address = request.remote_ip
     @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
-
     authorize! :create, @review
-    if @review.save
-      flash[:notice] = Spree.t(:review_successfully_submitted)
-      redirect_to spree.product_path(@product)
-    else
-      render :new
-    end
-  end
+     @review.save
+    flash[:notice] = Spree.t(:review_successfully_submitted)
+      redirect_to spree.edit_account_path(partial: "reviews", with_form: true)
 
-  private
+  end
 
   def load_product
     @product = Spree::Product.friendly.find(params[:product_id])
@@ -43,5 +58,8 @@ class Spree::ReviewsController < Spree::StoreController
 
   def review_params
     params.require(:review).permit(permitted_review_attributes)
+  end
+  def review_user_params
+    params.permit([:rating, :review, :name])
   end
 end

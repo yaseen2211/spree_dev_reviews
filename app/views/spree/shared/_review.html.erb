@@ -1,27 +1,43 @@
-<div class="review-details-pro col-lg-12 col-md-12 col-sm-12 cloth-pd" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
-  <ul>
-    <li>
-    <p><%= review.created_at.strftime("%e/%m/%Y").to_s %></p>
-    </li>                                  
-    <li>
-      <%= render partial: "spree/shared/review_star_filler", locals: {earned_stars: review.rating, color: "gray"}%>
+
+<ul>
+  <div class="review" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
+    <li class="attribution">
+      <p><%= l review.created_at.to_date %></p>
     </li>
-    <li>
-    <h3 class="mrt-10-top"><a href="#"><%= review.user.specific_name%></a></h3>
-    </li>  
-  </ul>
+    <li class="reviews-rating" title="<%= txt_stars(review.rating) %>">
+      <%= render 'spree/reviews/stars', stars: review.rating %>
+    </li>
+    <li itemprop="name"><%= review.title %></li>
+    <br/>
+    <li itemprop="datePublished" content="<%= review.created_at.to_date.to_s %>"></li>
+    <li itemprop="reviewRating" content="<%= review.rating %>"></li>
+    <% if review.show_identifier %>
+      <% if Spree::Reviews::Config[:show_email] && review.user %>
+        <li itemprop="author"><p><%= review.user.email %></p></li>
+      <% else %>
+        <li itemprop="author"><p><%= review.name %></p></li>
+      <% end %>
+    <% else %>
+      <li itemprop="author"><p><%= Spree.t(:anonymous) %></p></li>
+    <% end %>
 
-  <div class="discription-dv">
-
-    <div class="tis-ls1">
-      <span class="more body2 text-justify">
-      <%= simple_format(review.review) %>
-      </span>
-
-    </div>                
-
+    <% if Spree::Reviews::Config[:feedback_rating] && (!Spree::Reviews::Config[:require_login] || spree_current_user) %>
+      <div class="feedback_review" id="feedback_review_<%= review.id %>">
+        <%= render 'spree/feedback_reviews/form', review: review %>
+      </div>
+    <% end %>
   </div>
+</ul>
+<div class="discription-dv">
+  <div class="tis-ls1">
+    <span class="more body2 text-justify"><%= simple_format(review.review.slice(0,100)) %>
 
+      <span class="moreellipses" style="">...&nbsp;</span>
+      <span class="morecontent"><span style="display: none;">
+     <%= simple_format(review.review).slice(100, review.review.length)%>
+    </span>&nbsp;&nbsp;<a href="" class="morelink">Show</a></span>
+    </span>
+  </div>
 </div>
 <div class="clearfix"></div>
 <div class="dvd"></div>

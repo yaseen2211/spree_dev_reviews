@@ -1,13 +1,35 @@
-<% if defined? edit_enabled
-    state = ''
-    name  = 'review[rating]'
-  else
-    state = 'disabled'
-    name  = defined?(review).nil? ? Time.now.tv_usec.to_s : "review_#{review}"
-  end %>
-<% for i in 1..Spree::Reviews::Config.stars %>
-  <input name="<%= name %>"
-         type="radio" class="star"
-         value="<%= pluralize(i, 'stars') %>" <%= state %>
-         <%= 'checked' if i == stars %> />
+<% if !defined? (sub_order_id) %>
+
+  <% if defined? edit_enabled
+       state = ''
+       name = 'review[rating]'
+     else
+       state = 'disabled'
+       name = defined?(review).nil? ? Time.now.tv_usec.to_s : "review_#{review}"
+     end %>
+  <% if state = 'disabled' %>
+    <% star_fill = stars %>
+    <% star_empty = 5 - stars %>
+
+    <% star_fill.times do |star| %>
+      <%= image_tag "star_fill.png", alt: "" %>
+    <% end %>
+
+    <% star_empty.times do |star| %>
+      <%= image_tag "star_empty.png", alt: "" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <table class="rating_set">
+    <tr>
+      <% if defined? (sub_order_id) %>
+        <td><span class="rating js-rating-modal" id="<%= sub_order_id %>"></span></td>
+      <% else %>
+        <td><span class="rating"></span></td>
+      <% end %>
+    </tr>
+  </table>
 <% end %>
+
+
+
