@@ -12,20 +12,20 @@
     <% star_empty = 5 - stars %>
 
     <% star_fill.times do |star| %>
-      <%= image_tag "star_fill.png", alt: "" %>
+      <%= image_tag "star-b.png", alt: "" %>
     <% end %>
 
     <% star_empty.times do |star| %>
-      <%= image_tag "star_empty.png", alt: "" %>
+      <%= image_tag "star-w.png", alt: "" %>
     <% end %>
   <% end %>
 <% else %>
   <table class="rating_set">
     <tr>
       <% if defined? (sub_order_id) %>
-        <td><span class="rating js-rating-modal" id="<%= sub_order_id %>"></span></td>
+        <td><span class="rating js-rating-modal star_rating" id="<%= sub_order_id %>"></span></td>
       <% else %>
-        <td><span class="rating"></span></td>
+        <td><span class="rating star_rating"></span></td>
       <% end %>
     </tr>
   </table>
