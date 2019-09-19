@@ -2,14 +2,14 @@
 <ul>
   <div class="review" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
     <li class="attribution">
-      <p><%= l review.created_at.to_date %></p>
+      <p><%=  review.created_at.to_date.strftime("%m/%d/%Y") %></p>
     </li>
     <li class="reviews-rating" title="<%= txt_stars(review.rating) %>">
       <%= render 'spree/reviews/stars', stars: review.rating %>
     </li>
     <li itemprop="name"><%= review.title %></li>
     <br/>
-    <li itemprop="datePublished" content="<%= review.created_at.to_date.to_s %>"></li>
+    <li itemprop="datePublished" content="<%= review.created_at.to_date.strftime("%m/%d/%Y") %>"></li>
     <li itemprop="reviewRating" content="<%= review.rating %>"></li>
     <% if review.show_identifier %>
       <% if Spree::Reviews::Config[:show_email] && review.user %>
@@ -37,10 +37,12 @@
       <span class="morecontent"><span style="display: none;">
      <%= simple_format(review.review).slice(100, review.review.length) %>
     </span>&nbsp;&nbsp;<a href="" class="morelink">Show</a></span>
-      <% end %>
+        <% end %>
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
+<% if @product.reviews.length > 1 %>
 <div class="dvd"></div>
+<% end %>
 <div class="clearfix"></div>
