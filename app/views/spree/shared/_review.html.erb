@@ -32,10 +32,12 @@
   <div class="tis-ls1">
     <span class="more body2 text-justify"><%= simple_format(review.review.slice(0,100)) %>
 
+      <% if review.review.length >= 299 %>
       <span class="moreellipses" style="">...&nbsp;</span>
       <span class="morecontent"><span style="display: none;">
-     <%= simple_format(review.review).slice(100, review.review.length)%>
+     <%= simple_format(review.review).slice(100, review.review.length) %>
     </span>&nbsp;&nbsp;<a href="" class="morelink">Show</a></span>
+      <% end %>
     </span>
   </div>
 </div>
