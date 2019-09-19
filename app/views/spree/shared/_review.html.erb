@@ -1,14 +1,13 @@
 
 <ul>
-  <div class="review" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
-    <li class="attribution">
+  <div class="" itemprop="reviews" itemscope itemtype="http://schema.org/Review">
+    <li class="">
       <p><%=  review.created_at.to_date.strftime("%m/%d/%Y") %></p>
     </li>
     <li class="reviews-rating" title="<%= txt_stars(review.rating) %>">
       <%= render 'spree/reviews/stars', stars: review.rating %>
     </li>
     <li itemprop="name"><%= review.title %></li>
-    <br/>
     <li itemprop="datePublished" content="<%= review.created_at.to_date.strftime("%m/%d/%Y") %>"></li>
     <li itemprop="reviewRating" content="<%= review.rating %>"></li>
     <% if review.show_identifier %>
@@ -41,8 +40,3 @@
     </span>
   </div>
 </div>
-<div class="clearfix"></div>
-<% if @product.reviews.length > 1 %>
-<div class="dvd"></div>
-<% end %>
-<div class="clearfix"></div>

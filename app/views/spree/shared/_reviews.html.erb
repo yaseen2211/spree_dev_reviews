@@ -12,5 +12,10 @@
         <% end %>
         <%#= link_to Spree.t(:write_your_own_review), new_product_review_path(@product), class: 'btn btn-default', rel: 'nofollow' %>
     </div>
+    <div class="clearfix"></div>
+    <% if @product.reviews.length > 1 %>
+      <div class="dvd"></div>
+    <% end %>
+    <div class="clearfix"></div>
   </div>
 </div>
