@@ -1,6 +1,5 @@
 <div id="reviews">
   <div class="cth-review">
-    <div class="review-details-pro col-lg-12 col-md-12 col-sm-12 cloth-pd">
         <!--  <h3 class="product-section-title"><%#= Spree.t(:reviews) %></h3>-->
         <% if Spree::Reviews::Config[:include_unapproved_reviews] == false and @product.reviews.approved.count == 0 %>
           <p class="reviews-none"><%= Spree.t(:no_reviews_available) %></p>
@@ -11,11 +10,5 @@
           <% end %>
         <% end %>
         <%#= link_to Spree.t(:write_your_own_review), new_product_review_path(@product), class: 'btn btn-default', rel: 'nofollow' %>
-    </div>
-    <div class="clearfix"></div>
-    <% if @product.reviews.length > 1 %>
-      <div class="dvd"></div>
-    <% end %>
-    <div class="clearfix"></div>
   </div>
 </div>
