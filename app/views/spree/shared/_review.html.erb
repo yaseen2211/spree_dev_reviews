@@ -1,36 +1,36 @@
 <div class="review-details-pro col-lg-12 col-md-12 col-sm-12 cloth-pd">
 
-<ul>
-  <div itemprop="reviews" itemscope itemtype="http://schema.org/Review">
-    <li >
-      <p><%=  review.created_at.to_date.strftime("%m/%d/%Y") %></p>
-    </li>
-    <li class="reviews-rating" title="<%= txt_stars(review.rating) %>">
-      <%= render 'spree/reviews/stars', stars: review.rating %>
-    </li>
-    <li itemprop="name"><%= review.title %></li>
-    <li itemprop="datePublished" content="<%= review.created_at.to_date.strftime("%m/%d/%Y") %>"></li>
-    <li itemprop="reviewRating" content="<%= review.rating %>"></li>
-    <% if review.show_identifier %>
-      <% if Spree::Reviews::Config[:show_email] && review.user %>
-        <li itemprop="author"><p><%= review.user.email %></p></li>
+  <ul>
+    <div itemprop="reviews" itemscope itemtype="http://schema.org/Review">
+      <li>
+        <p><%= review.created_at.to_date.strftime("%m/%d/%Y") %></p>
+      </li>
+      <li class="reviews-rating" title="<%= txt_stars(review.rating) %>">
+        <%= render 'spree/reviews/stars', stars: review.rating %>
+      </li>
+      <li itemprop="name"><%= review.title %></li>
+      <li itemprop="datePublished" content="<%= review.created_at.to_date.strftime("%m/%d/%Y") %>"></li>
+      <li itemprop="reviewRating" content="<%= review.rating %>"></li>
+      <% if review.show_identifier %>
+        <% if Spree::Reviews::Config[:show_email] && review.user %>
+          <li itemprop="author"><p><%= review.user.email %></p></li>
+        <% else %>
+          <li itemprop="author"><p><%= review.name %></p></li>
+        <% end %>
       <% else %>
-        <li itemprop="author"><p><%= review.name %></p></li>
+        <li itemprop="author"><p><%= Spree.t(:anonymous) %></p></li>
       <% end %>
-    <% else %>
-      <li itemprop="author"><p><%= Spree.t(:anonymous) %></p></li>
-    <% end %>
 
-    <% if Spree::Reviews::Config[:feedback_rating] && (!Spree::Reviews::Config[:require_login] || spree_current_user) %>
-      <div class="feedback_review" id="feedback_review_<%= review.id %>">
-        <%= render 'spree/feedback_reviews/form', review: review %>
-      </div>
-    <% end %>
-  </div>
-</ul>
-<div class="discription-dv">
-  <div class="tis-ls1">
-    <span class="more body2 text-justify"><%= simple_format(review.review.slice(0,100)) %>
+      <% if Spree::Reviews::Config[:feedback_rating] && (!Spree::Reviews::Config[:require_login] || spree_current_user) %>
+        <div class="feedback_review" id="feedback_review_<%= review.id %>">
+          <%= render 'spree/feedback_reviews/form', review: review %>
+        </div>
+      <% end %>
+    </div>
+  </ul>
+  <div class="discription-dv">
+    <div class="tis-ls1">
+    <span class="more body2 text-justify"><%= simple_format(review.review.slice(0, 100)) %>
 
       <% if review.review.length >= 299 %>
       <span class="moreellipses" style="">...&nbsp;</span>
@@ -39,11 +39,11 @@
     </span>&nbsp;&nbsp;<a href="" class="morelink">Show</a></span>
         <% end %>
     </span>
+    </div>
   </div>
 </div>
-</div>
+<% if @product.reviews.length > 1 && @product.reviews.first != review %>
 <div class="clearfix"></div>
-<% if @product.reviews.length > 1 && @product.reviews.last.id == review.id  %>
   <div class="dvd"></div>
-<% end %>
 <div class="clearfix"></div>
+<% end %>
