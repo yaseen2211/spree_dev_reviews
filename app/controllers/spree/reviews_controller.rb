@@ -25,7 +25,7 @@ class Spree::ReviewsController < Spree::StoreController
       @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
       authorize! :create, @review
       if @review.save
-        flash[:notice] = Spree.t(:review_successfully_submitted)
+        flash[:notice] = Spree.t(:review_successfully_submitted_it_will_show_after_admin_approval)
         redirect_to spree.product_path(@product)
       else
         render :new
@@ -43,7 +43,7 @@ class Spree::ReviewsController < Spree::StoreController
     @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
     authorize! :create, @review
      @review.save
-    flash[:notice] = Spree.t(:review_successfully_submitted)
+    flash[:notice] = Spree.t(:review_successfully_submitted_it_will_show_after_admin_approval)
       redirect_to spree.edit_account_path(partial: "reviews", with_form: true)
 
   end
