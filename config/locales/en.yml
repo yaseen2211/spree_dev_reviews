@@ -34,7 +34,7 @@ en:
     from: from
     info_approve_review: Review approved
     leave_us_a_review_for: "Please leave us a review and a rating for our '%{name}'"
-    no_reviews_available: "No reviews have been written for this product."
+    no_reviews_available: "The review will be shown after admin approval."
     out_of_5: "out of 5"
     rating: rating
     reviews: Reviews
