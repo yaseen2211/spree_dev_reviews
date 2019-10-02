@@ -5,10 +5,15 @@
           <p class="reviews-none"><%= Spree.t(:no_reviews_available) %></p>
         <% else %>
           <%= render 'spree/shared/rating', product: @product, review: 0 %>
-          <% for review in (Spree::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter.preview %>
+          <% for review in (Spree::Reviews::Config[:track_locale] ? @product.reviews.localized(I18n.locale) : @product.reviews).default_approval_filter %>
             <%= render 'spree/shared/review', review: review %>
           <% end %>
         <% end %>
         <%#= link_to Spree.t(:write_your_own_review), new_product_review_path(@product), class: 'btn btn-default', rel: 'nofollow' %>
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+      $('.dvd').last().remove();
+  })
+</script>
