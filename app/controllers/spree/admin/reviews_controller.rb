@@ -8,6 +8,9 @@ class Spree::Admin::ReviewsController < Spree::Admin::ResourceController
   def approve
     review = Spree::Review.find(params[:id])
     if review.update_attribute(:approved, true)
+      product = review.product
+      user = review.user
+      Spree::UserMailer.inform_user_approve_review(user,product).deliver_now
       flash[:notice] = Spree.t(:info_approve_review)
     else
       flash[:error] = Spree.t(:error_approve_review)

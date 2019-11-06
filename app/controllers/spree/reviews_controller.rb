@@ -25,6 +25,7 @@ class Spree::ReviewsController < Spree::StoreController
       @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
       authorize! :create, @review
       if @review.save
+        Spree::UserMailer.inform_admin_review(spree_current_user,@product).deliver_now
         flash[:notice] = Spree.t(:review_successfully_submitted_it_will_show_after_admin_approval)
         redirect_to spree.edit_account_path(partial: "orders")
       else
@@ -42,7 +43,9 @@ class Spree::ReviewsController < Spree::StoreController
     @review.ip_address = request.remote_ip
     @review.locale = I18n.locale.to_s if Spree::Reviews::Config[:track_locale]
     authorize! :create, @review
-     @review.save
+    if  @review.save
+      Spree::UserMailer.inform_admin_review(spree_current_user,@product).deliver_now
+    end
     flash[:notice] = Spree.t(:review_successfully_submitted_it_will_show_after_admin_approval)
       redirect_to spree.edit_account_path(partial: "reviews", with_form: true)
 
